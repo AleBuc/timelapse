@@ -1,4 +1,6 @@
 import logging
+from datetime import datetime
+from os import system
 from time import sleep
 from picamera import PiCamera
 
@@ -10,6 +12,12 @@ logging.info(str(numPics) + " pictures to take.")
 
 camera = PiCamera()
 camera.resolution = (1920, 1080)
+
+picturesDirectory = '/home/pi/Pictures'
+
+date = datetime.now().isoformat()
+picsFolder = picturesDirectory + '/picsTaking' + date
+system('mkdir ' + picsFolder)
 
 for i in range(numPics):
     camera.capture('/home/pi/Pictures/image'+str(i)+'.jpg')
