@@ -20,6 +20,6 @@ picsFolder = picturesDirectory + '/picsTaking' + date
 system('mkdir ' + picsFolder)
 
 for i in range(numPics):
-    camera.capture(picsFolder + '/img{0:08d}.png'.format(i), format='png')
+    camera.capture(picsFolder + '/img{0:05d}.png'.format(i), format='png')
     sleep(capturePeriod)
 logging.info(str(range) + " taken pictures.")
