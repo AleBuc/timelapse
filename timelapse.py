@@ -21,7 +21,6 @@ print(str(numPics) + ' pictures to take.')
 camera = PiCamera()
 camera.resolution = (xResolution, yResolution)
 
-
 date = datetime.now().isoformat()
 if rotation == 0:
     picsToRotateFolder = ''
@@ -33,9 +32,10 @@ picsFolderToSave = picsFolder + picsToRotateFolder
 os.mkdir(picsFolder)
 if rotation != 0:
     os.mkdir(picsFolderToSave)
-
+print('Begin the capture.')
 for i in range(numPics):
     camera.capture(picsFolderToSave + '/img{0:05d}.png'.format(i), format='png')
+    print('Capture ' + str(i) + ' on ' + str(numPics) + '.')
     sleep(capturePeriod)
 print(str(range) + ' taken pictures.')
 
