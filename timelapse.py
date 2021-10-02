@@ -43,9 +43,9 @@ if rotation != 0:
     print('Begin to rotate the pictures')
     picsNames = os.listdir(picsFolderToSave)
     for picName in picsNames:
-        pic = Image.open(picsFolderToSave + picName)
+        pic = Image.open(picsFolderToSave + '/' + picName)
         pic = pic.rotate(rotation, expand=1)
-        pic.save(picsFolder + picName)
+        pic.save(picsFolder + '/' + picName)
         print(picName + ' rotated')
     os.rmdir(picsFolderToSave)
     print('All pics moved in ' + picsFolder)
