@@ -1,25 +1,55 @@
-import logging
+import os
 from datetime import datetime
 from os import system
 from time import sleep
+
+from PIL import Image
 from picamera import PiCamera
 
-totalTime = 60  # set the total time of capture in minutes
-capturePeriod = 10  # set the period in seconds between 2 taken pictures
+totalTime = 120  # set the total time of capture in minutes
+capturePeriod = 2  # set the period in seconds between 2 taken pictures
+rotation = 180  # set the angle of rotation needed for the pictures.
+fps = 60  # set number of frames per second of the video
+xResolution = 1024
+yResolution = 768
+picturesDirectory = '/home/pi/Pictures'
+videosDirectory = '/home/pi/Videos'
 
 numPics = int((totalTime * 60) / capturePeriod)  # number of pictures to take
-logging.info(str(numPics) + " pictures to take.")
+print(str(numPics) + ' pictures to take.')
 
 camera = PiCamera()
-camera.resolution = (1920, 1080)
+camera.resolution = (xResolution, yResolution)
 
-picturesDirectory = '/home/pi/Pictures'
 
 date = datetime.now().isoformat()
+if rotation == 0:
+    picsToRotateFolder = ''
+else:
+    picsToRotateFolder = '/to_rotate'
+
 picsFolder = picturesDirectory + '/picsTaking' + date
-system('mkdir ' + picsFolder)
+picsFolderToSave = picsFolder + picsToRotateFolder
+os.mkdir(picsFolder)
+if rotation != 0:
+    os.mkdir(picsFolderToSave)
 
 for i in range(numPics):
-    camera.capture(picsFolder + '/img{0:05d}.png'.format(i), format='png')
+    camera.capture(picsFolderToSave + '/img{0:05d}.png'.format(i), format='png')
     sleep(capturePeriod)
-logging.info(str(range) + " taken pictures.")
+print(str(range) + ' taken pictures.')
+
+if rotation != 0:
+    print('Begin to rotate the pictures')
+    picsNames = os.listdir(picsFolderToSave)
+    for picName in picsNames:
+        pic = Image.open(picsFolderToSave + picName)
+        pic = pic.rotate(rotation, expand=1)
+        pic.save(picsFolder + picName)
+        print(picName + ' rotated')
+    os.rmdir(picsFolderToSave)
+    print('All pics moved in ' + picsFolder)
+
+system('ffmpeg -r {} -f image2 -s ' + str(xResolution) + 'x' + str(
+    yResolution) + ' -nostats -loglevel 0 -pattern_type glob -i "' + picsFolder + '"/*.jpg" -vcodec libx264 -crf 25  -pix_fmt yuv420p ' + videosDirectory + '/{}.mp4'.format(
+    fps, date))
