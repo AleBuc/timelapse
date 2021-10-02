@@ -7,7 +7,7 @@ from PIL import Image
 from picamera import PiCamera
 
 totalTime = 120  # set the total time of capture in minutes
-capturePeriod = 2  # set the period in seconds between 2 taken pictures
+capturePeriod = 4  # set the period in seconds between 2 taken pictures
 rotation = 180  # set the angle of rotation needed for the pictures.
 fps = 60  # set number of frames per second of the video
 xResolution = 1024
@@ -32,12 +32,12 @@ picsFolderToSave = picsFolder + picsToRotateFolder
 os.mkdir(picsFolder)
 if rotation != 0:
     os.mkdir(picsFolderToSave)
-print('Begin the capture.')
+print('Begin the capture at ' + datetime.now().isoformat() + '.')
 for i in range(numPics):
     camera.capture(picsFolderToSave + '/img{0:05d}.png'.format(i), format='png')
     print('Capture ' + str(i) + ' on ' + str(numPics) + '.')
     sleep(capturePeriod)
-print(str(range) + ' taken pictures.')
+print(str(range) + ' taken pictures at ' + datetime.now().isoformat() + '.')
 
 if rotation != 0:
     print('Begin to rotate the pictures')
