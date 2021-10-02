@@ -50,6 +50,6 @@ if rotation != 0:
     os.rmdir(picsFolderToSave)
     print('All pics moved in ' + picsFolder)
 
-system('ffmpeg -r {} -f image2 -s ' + str(xResolution) + 'x' + str(
+system('ffmpeg -r {} -f image2 -s '.format(fps) + str(xResolution) + 'x' + str(
     yResolution) + ' -nostats -loglevel 0 -pattern_type glob -i "' + picsFolder + '"/*.jpg" -vcodec libx264 -crf 25  -pix_fmt yuv420p ' + videosDirectory + '/{}.mp4'.format(
-    fps, date))
+    date))
