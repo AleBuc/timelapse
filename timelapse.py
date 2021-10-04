@@ -7,12 +7,12 @@ from time import sleep
 from PIL import Image
 from picamera import PiCamera
 
-totalTime = 120  # set the total time of capture in minutes
-capturePeriod = 4  # set the period in seconds between 2 taken pictures
-rotation = 180  # set the angle of rotation needed for the pictures.
+totalTime = 5  # set the total time of capture in minutes
+capturePeriod = 2  # set the period in seconds between 2 taken pictures
+rotation = 270  # set the angle of rotation needed for the pictures.
 fps = 60  # set number of frames per second of the video
-xResolution = 1024
-yResolution = 768
+xResolution = 600
+yResolution = 600
 picturesDirectory = '/home/pi/Pictures'
 videosDirectory = '/home/pi/Videos'
 
