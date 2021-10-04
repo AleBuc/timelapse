@@ -1,4 +1,5 @@
 import os
+import shutil
 from datetime import datetime
 from os import system
 from time import sleep
@@ -47,7 +48,7 @@ if rotation != 0:
         pic = pic.rotate(rotation, expand=1)
         pic.save(picsFolder + '/' + picName)
         print(picName + ' rotated')
-    os.rmdir(picsFolderToSave)
+    shutil.rmtree(picsFolderToSave)
     print('All pics moved in ' + picsFolder)
 
 system('ffmpeg -r {} -f image2 -s '.format(fps) + str(xResolution) + 'x' + str(
