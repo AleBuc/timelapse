@@ -52,5 +52,5 @@ if rotation != 0:
     print('All pics moved in ' + picsFolder)
 
 system('ffmpeg -r {} -f image2 -s '.format(fps) + str(xResolution) + 'x' + str(
-    yResolution) + ' -pattern_type glob -i "' + picsFolder + '/*.png" -vcodec libx264 -crf 25  -pix_fmt yuv420p ' + videosDirectory + '/{}.mp4'.format(
+    yResolution) + ' -nostats -loglevel 0 -pattern_type glob -i "' + picsFolder + '/*.png" -vcodec libx264 -crf 25  -pix_fmt yuv420p ' + videosDirectory + '/{}.mp4'.format(
     date))
