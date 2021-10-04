@@ -8,7 +8,7 @@ from PIL import Image
 from picamera import PiCamera
 
 totalTime = 5  # set the total time of capture in minutes
-capturePeriod = 2  # set the period in seconds between 2 taken pictures
+capturePeriod = 5  # set the period in seconds between 2 taken pictures
 rotation = 270  # set the angle of rotation needed for the pictures.
 fps = 60  # set number of frames per second of the video
 xResolution = 600
@@ -52,5 +52,5 @@ if rotation != 0:
     print('All pics moved in ' + picsFolder)
 
 system('ffmpeg -r {} -f image2 -s '.format(fps) + str(xResolution) + 'x' + str(
-    yResolution) + ' -pattern_type glob -i "' + picsFolder + '"/*.png" -vcodec libx264 -crf 25  -pix_fmt yuv420p ' + videosDirectory + '/{}.mp4'.format(
+    yResolution) + ' -pattern_type glob -i "' + picsFolder + '/*.png" -vcodec libx264 -crf 25  -pix_fmt yuv420p ' + videosDirectory + '/{}.mp4'.format(
     date))
