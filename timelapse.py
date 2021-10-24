@@ -49,10 +49,10 @@ async def main():
 
     picsFolder = picturesDirectory + '/picsTaking' + date
     picsFolderToSave = picsFolder + picsToRotateFolder
-    correctPeriod = capturePeriod - calibration(camera, picsFolderToSave)
     os.mkdir(picsFolder)
     if rotation != 0:
         os.mkdir(picsFolderToSave)
+    correctPeriod = capturePeriod - calibration(camera, picsFolderToSave)
     print('Begin the capture at ' + datetime.now().isoformat() + '.')
     for i in range(numPics):
         await asyncio.create_task(capture(camera, picsFolderToSave, i, numPics))
