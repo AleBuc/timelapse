@@ -26,9 +26,17 @@ async def waiting(seconds):
     await asyncio.sleep(seconds)
 
 
+def calibration(camera,picsFolderToSave):
+    date1 = datetime.now()
+    camera.capture(picsFolderToSave + '/img_calibration.png', format='png')
+    date2 = datetime.now()
+    return (date2-date1).total_seconds()
+
+
 async def main():
     numPics = int((totalTime * 60) / capturePeriod)  # number of pictures to take
     print(str(numPics) + ' pictures to take.')
+
 
     camera = PiCamera()
     camera.resolution = (xResolution, yResolution)
@@ -41,13 +49,14 @@ async def main():
 
     picsFolder = picturesDirectory + '/picsTaking' + date
     picsFolderToSave = picsFolder + picsToRotateFolder
+    correctPeriod = capturePeriod - calibration(camera, picsFolderToSave)
     os.mkdir(picsFolder)
     if rotation != 0:
         os.mkdir(picsFolderToSave)
     print('Begin the capture at ' + datetime.now().isoformat() + '.')
     for i in range(numPics):
         await asyncio.create_task(capture(camera, picsFolderToSave, i, numPics))
-        await asyncio.create_task(waiting(capturePeriod))
+        await asyncio.create_task(waiting(correctPeriod))
     print(str(range) + ' taken pictures at ' + datetime.now().isoformat() + '.')
 
     if rotation != 0:
