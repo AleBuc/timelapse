@@ -27,9 +27,11 @@ async def waiting(seconds):
 
 
 def calibration(camera,picsFolderToSave):
+    calibrationPath = picsFolderToSave + '/img_calibration.png'
     date1 = datetime.now()
-    camera.capture(picsFolderToSave + '/img_calibration.png', format='png')
+    camera.capture(calibrationPath, format='png')
     date2 = datetime.now()
+    os.remove(calibrationPath)
     return (date2-date1).total_seconds()
 
 
