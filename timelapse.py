@@ -78,7 +78,7 @@ async def main():
     if rotation != 0:
         print('Begin to rotate the pictures')
         pics_names = os.listdir(pics_folder_to_save)
-        for pic_name in pics_names:
+        for pic_name in sorted(pics_names):
             pic = Image.open(pics_folder_to_save + '/' + pic_name)
             pic = pic.rotate(rotation, expand=True)
             pic.save(pics_folder + '/' + pic_name)
